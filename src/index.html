@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>League Queue Notification Hook</title>
+    <title>League Queue: Notification Hook</title>
     <link rel="stylesheet" href="index.css">
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -11,13 +11,24 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script defer src="render.js"></script>
+    <script src="https://kit.fontawesome.com/1c9144b004.js" crossorigin="anonymous"></script>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
   </head>
   <body>
     <div class="container center-align">
-      <div id="title"><h4>Get notified when your queue pops</h4></div>
-      <div id="info"><p></p></div>
-      <div id="button"><a class="waves-effect waves-light light-blue btn">Hook</a></div>
+      <!-- <div id="title"><h4>Get notified when your queue pops</h4></div> -->
+      <!-- <div id="info"><p></p></div> -->
+      <!-- <div id="button"><a class="waves-effect waves-light light-blue btn">Hook</a></div> -->
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">Queue Listener</span>
+          <p>Feel free to minimize this window. You will get a push notification on your phone when your game is ready.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Hook game instance</a>
+          <a href="#">Suspend notifications</a>
+        </div>
+      </div>
     </div>
     
   </body>

@@ -30,3 +30,12 @@ function callback(error, response, body){
 
 connector.start();
 // console.log(connector);
+
+// var windowTopBar = document.createElement('div')
+// windowTopBar.style.width = "100%"
+// windowTopBar.style.height = "32px"
+// windowTopBar.style.backgroundColor = "#2b61d6"
+// windowTopBar.style.position = "relative"
+// windowTopBar.style.top = windowTopBar.style.left = 0
+// windowTopBar.style.webkitAppRegion = "drag"
+// document.body.prepend(windowTopBar);
