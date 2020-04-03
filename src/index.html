@@ -2,13 +2,23 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>League Queue Notification Hook</title>
     <link rel="stylesheet" href="index.css">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script defer src="render.js"></script>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
   </head>
   <body>
-    <h1 id="hello">💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+    <div class="container center-align">
+      <div id="title"><h4>Get notified when your queue pops</h4></div>
+      <div id="info"><p></p></div>
+      <div id="button"><a class="waves-effect waves-light light-blue btn">Hook</a></div>
+    </div>
+    
   </body>
 </html>
