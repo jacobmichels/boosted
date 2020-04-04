@@ -6,3 +6,9 @@ body {
 h4{
   color: white;
 }
+
+a:-webkit-any-link {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: underline;
+}

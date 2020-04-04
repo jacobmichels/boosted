@@ -10,7 +10,7 @@ connector.on('connect', (data) => {
     let pw = Base64.encode("riot:"+data.password);
     console.log(pw);
     const options={
-        url:'https://127.0.0.1:'+data.port+'/lol-lobby/v2/lobby/matchmaking/search-state',
+        url:'https://127.0.0.1:'+data.port+'/lol-matchmaking/v1/ready-check',
         headers: {
             'User-Agent': 'postman-request',
             'Accept':'application/json',
@@ -18,17 +18,25 @@ connector.on('connect', (data) => {
         },
     }
     console.log(options);
-    request(options, callback);
+    setInterval(function(){ request(options, callback); }, 3000);
+    // request(options, callback);
 });
 
 function callback(error, response, body){
-    if (!error && response.statusCode == 200) {
-        const info = JSON.parse(body);
-        console.log(info);
+    console.log(error);
+    console.log(response);
+    console.log(body);
+    const info = JSON.parse(body);
+    console.log(info);
+    if(info.state==="InProgress"){
+        document.getElementById('message').innerHTML="found a match";
     }
 }
 
-connector.start();
+$("#hook-btn").click(function(){
+    connector.start();
+});
+
 // console.log(connector);
 
 // var windowTopBar = document.createElement('div')
