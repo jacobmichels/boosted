@@ -2,6 +2,7 @@ const LCUConnector = require('lcu-connector');
 const connector = new LCUConnector();
 const Base64 = require('js-base64').Base64;
 const request = require('postman-request');
+const remote = require('electron').remote;
 
 $(document).ready(function(){
     $('#stop-btn').addClass('disabled');
@@ -36,6 +37,7 @@ connector.on('disconnect',(data)=>{
     console.log("lost connection with LCU");
     $('#stop-btn').addClass('disabled');
     $('#suspend-btn').addClass('disabled');
+    $('#config-btn').addClass('disabled');
     document.getElementById('message').innerHTML="Lost connection with game client.";
 })
 
@@ -55,6 +57,7 @@ $("#hook-btn").click(function(){
     connector.start();
     $('#hook-btn').addClass('disabled');
     $('#stop-btn').removeClass('disabled');
+    $('#config-btn').addClass('disabled');
 });
 
 $('#stop-btn').click(function(){
@@ -62,7 +65,13 @@ $('#stop-btn').click(function(){
     document.getElementById('message').innerHTML="Stopped looking for game instance.";
     $('#hook-btn').removeClass('disabled');
     $('#stop-btn').addClass('disabled');
+    $('#config-btn').removeClass('disabled');
 });
+
+// $('#exit-btn').click(function(){
+//     let window = remote.getCurrentWindow();
+//     window.close();
+// })
 
 // console.log(connector);
 
