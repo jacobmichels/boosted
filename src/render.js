@@ -4,6 +4,12 @@ const Base64 = require('js-base64').Base64;
 const request = require('postman-request');
 const remote = require('electron').remote;
 
+const customTitlebar = require('custom-electron-titlebar');
+ 
+new customTitlebar.Titlebar({
+    backgroundColor: customTitlebar.Color.fromHex('#212121')
+});
+
 $(document).ready(function(){
     $('#stop-btn').addClass('disabled');
     $('#suspend-btn').addClass('disabled');
