@@ -7,7 +7,9 @@ const remote = require('electron').remote;
 const customTitlebar = require('custom-electron-titlebar');
  
 new customTitlebar.Titlebar({
-    backgroundColor: customTitlebar.Color.fromHex('#212121')
+    backgroundColor: customTitlebar.Color.fromHex('#212121'),
+    menu:null,
+    icon:"../resources/icons/lol-icon.png"
 });
 
 $(document).ready(function(){
