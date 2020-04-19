@@ -12,7 +12,7 @@ const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 500,
-    height: 280,
+    height: 265,
     webPreferences:{
       nodeIntegration:true,
     },

@@ -63,3 +63,33 @@ html,body {
 #valign{
   vertical-align: middle;
 }
+
+/* label color */
+/* .input-field label {
+  color: #f44336 !important;
+} */
+.input-field input[type=text]:focus + label {
+  color: #d86666 !important;
+}
+.input-field input[type=text]:label {
+  color: white !important;
+}
+
+.input-field>label{
+  color: white;
+}
+
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #d86666 !important;
+  box-shadow: 0 1px 0 0 #d86666 !important;
+}
+
+/* .input-field input[type=text].valid {
+  border-bottom: 1px solid #f44336 !important;
+  box-shadow: 0 1px 0 0 #f44336 !important;
+} */
+
+/* textarea.materialize-textarea:focus:not([readonly])+label{
+  color:#f44336 !important;
+} */
