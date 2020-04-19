@@ -12,7 +12,7 @@ var interval;
 const customTitlebar = require('custom-electron-titlebar');
 
 new customTitlebar.Titlebar({
-    backgroundColor: customTitlebar.Color.fromHex('#212121'),
+    backgroundColor: customTitlebar.Color.fromHex('#333333'),
     menu: null,
     icon: "../resources/icons/lol-icon.png"
 });
