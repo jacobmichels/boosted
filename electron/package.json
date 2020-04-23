@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "custom-electron-titlebar": "^3.2.2-hotfix62",
+    "edit-json-file": "^1.4.0",
     "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.4.1",
     "js-base64": "^2.5.2",
