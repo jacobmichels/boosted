@@ -34,15 +34,15 @@
                   <div class="card-action">
                     <div class="input-field">
                       <input id="pushed-id-field" class="white-text" type="text">
-                      <label for="pushed-id-field">Pushed ID</label>
+                      <label id="pushed-id-field-label" for="pushed-id-field">Pushed ID</label>
                     </div>
                     <div class="input-field">
                       <input id="interval-field" class="white-text" type="text">
-                      <label for="interval-field">Polling Interval (ms)</label>
+                      <label id="interval-field-label" for="interval-field">Polling Interval (ms)</label>
                     </div>
                     <div class="input-field">
                       <select id="queue-accept-timing">
-                        <option class="white-text" value="wait" disabled selected>Queue Accept timing (Default is to wait)</option>
+                        <option id='default-option' class="white-text" value="wait" disabled selected>Queue Accept timing (Set to wait)</option>
                         <option value="asap">Accept as soon as possible</option>
                         <option value="wait">Wait until last second to accept</option>
                       </select>

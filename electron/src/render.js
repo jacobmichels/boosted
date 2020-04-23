@@ -12,8 +12,10 @@ var interval;
 //global variable for accessing LCU
 let connector;
 
-//global variable to store pushed_id
+//global variable to store data in config.json
 let id;
+let interval_time=50;
+let accept_timing='wait';
 
 //global variable to store info about current client session
 let LCU;
@@ -42,7 +44,14 @@ readConfig = () => {
             $('#message').html('Please set your pushed ID in the config menu');
         }
         else {
-            id = JSON.parse(data).pushed_id;
+            let config = JSON.parse(data);
+            id = config.pushed_id;
+            if(id===''){
+                id = 0;
+                $('#message').html('Please set your pushed ID in the config menu');
+            }
+            interval_time=config.interval;
+            accept_timing=config.timing;
         }
         console.log(id);
     })
@@ -146,7 +155,7 @@ $("#hook-btn").click(function () {
             agent: agent,
         }
         console.log(options);
-        interval = setInterval(function () { request(options, readyCheck); }, 50);      //TODO make interval configurable
+        interval = setInterval(function () { request(options, readyCheck); }, interval_time);      //TODO make interval configurable
     });
     connector.start();
     $('#stop-btn').removeClass('disabled');
@@ -177,7 +186,7 @@ $('#config-btn').click(function () {        //show configuration options
     })
     win.loadURL(`file://${__dirname}/config.html`);
     
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
 })
 
 $('#stop-btn').click(function () {
