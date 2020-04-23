@@ -49,7 +49,7 @@ readConfig = () => {
 }
 
 //call back to "check if in queue" request
-readyCheck=(error, response, body) => {
+readyCheck = (error, response, body) => {
     let info;
     try {
         info = JSON.parse(body);
@@ -151,13 +151,27 @@ $("#hook-btn").click(function () {
     connector.start();
     $('#stop-btn').removeClass('disabled');
     $('#config-btn').addClass('disabled');
+    $('#hook-btn').addClass('disabled');
     document.getElementById('message').innerHTML = "Looking for game instance...";
     BrowserWindow.getFocusedWindow().setSize(500, 265);
 });
 
 $('#config-btn').click(function () {        //show configuration options
-    BrowserWindow.getFocusedWindow().setSize(500, 340);
-    $('#message').html('<div class="input-field"><input id="pushed-id-field" class="white-text" type="text"><label for="pushed-id-field">Pushed ID</label><a onclick="confirm()" class="waves-effect red waves-light btn">save</a></div>');
+    // BrowserWindow.getFocusedWindow().setSize(500, 340);
+    // $('#message').html('<div class="input-field"><input id="pushed-id-field" class="white-text" type="text"><label for="pushed-id-field">Pushed ID</label><a onclick="confirm()" class="waves-effect red waves-light btn">save</a></div>');
+    let win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true,
+        },
+        frame: false
+    })
+    win.setMenu(null);
+    win.on('closed', () => {
+        win = null;
+    })
+    win.loadURL(`file://${__dirname}/config.html`);
 })
 
 confirm = () => {       //save id to file
@@ -174,7 +188,7 @@ confirm = () => {       //save id to file
 $('#stop-btn').click(function () {
     connector.stop();       //stop polling for queue
     clearInterval(interval);
-    document.getElementById('message').innerHTML = "Stopped looking for game instance. (requests)";
+    document.getElementById('message').innerHTML = "Stopped looking for game instance.";
     $('#hook-btn').removeClass('disabled');
     $('#stop-btn').addClass('disabled');
     $('#config-btn').removeClass('disabled');

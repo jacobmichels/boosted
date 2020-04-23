@@ -16,12 +16,19 @@ const createWindow = () => {
     webPreferences:{
       nodeIntegration:true,
     },
-    frame:false
+    frame:false,
+    resizable:false
   });
 
   mainWindow.setMenu(null);
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+
+  mainWindow.on('close',()=>{
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  })
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
