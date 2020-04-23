@@ -8,13 +8,15 @@
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="../node_modules/materialize-css/dist/css/materialize.css">
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
     <script defer src="config.js"></script>
     <!-- Font Awesome -->
     <script defer src="https://kit.fontawesome.com/1c9144b004.js" crossorigin="anonymous"></script>
     <script defer>window.$ = window.jQuery = require('jquery');</script>
+    <link rel="stylesheet" type="text/css" href="../scss/custom.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 </head>
@@ -29,9 +31,24 @@
                   <div class="card-content white-text">
                     <span id="title" class="card-title">Configuration</span>
                   </div>
-                  <hr>
                   <div class="card-action">
-                    
+                    <div class="input-field">
+                      <input id="pushed-id-field" class="white-text" type="text">
+                      <label for="pushed-id-field">Pushed ID</label>
+                    </div>
+                    <div class="input-field">
+                      <input id="interval-field" class="white-text" type="text">
+                      <label for="interval-field">Polling Interval (ms)</label>
+                    </div>
+                    <div class="input-field">
+                      <select id="queue-accept-timing">
+                        <option class="white-text" value="wait" disabled selected>Queue Accept timing (Default is to wait)</option>
+                        <option value="asap">Accept as soon as possible</option>
+                        <option value="wait">Wait until last second to accept</option>
+                      </select>
+                    </div>
+                    <a onclick="cancel()" class="waves-effect red waves-light btn">cancel</a>
+                    <a onclick="save()" class="waves-effect red waves-light btn">save and exit</a>
                   </div>
                 </div>
               </div>
@@ -39,6 +56,9 @@
           </div>
         </div>
       </div>
+      <script type="text/javascript" src="../node_modules/materialize-css/dist/js/materialize.js"></script>
+      <script>M.AutoInit();</script>
+      
 </body>
 
 </html>

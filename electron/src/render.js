@@ -159,6 +159,8 @@ $("#hook-btn").click(function () {
 $('#config-btn').click(function () {        //show configuration options
     // BrowserWindow.getFocusedWindow().setSize(500, 340);
     // $('#message').html('<div class="input-field"><input id="pushed-id-field" class="white-text" type="text"><label for="pushed-id-field">Pushed ID</label><a onclick="confirm()" class="waves-effect red waves-light btn">save</a></div>');
+    let main = BrowserWindow.getFocusedWindow();
+    main.setEnabled(false);
     let win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -170,20 +172,13 @@ $('#config-btn').click(function () {        //show configuration options
     win.setMenu(null);
     win.on('closed', () => {
         win = null;
+        main.setEnabled(true);
+        main.focus();
     })
     win.loadURL(`file://${__dirname}/config.html`);
+    
+    win.webContents.openDevTools();
 })
-
-confirm = () => {       //save id to file
-    let pushed_id = $('#pushed-id-field').val();
-    let config = { 'pushed_id': pushed_id };
-    fs.writeFile(__dirname + '/../config.json', JSON.stringify(config), () => {
-        $('#message').html('Configuration saved');
-        readConfig();
-    })
-    console.log(config);
-    BrowserWindow.getFocusedWindow().setSize(500, 265);
-}
 
 $('#stop-btn').click(function () {
     connector.stop();       //stop polling for queue

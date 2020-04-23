@@ -66,6 +66,7 @@
     "jquery": "^3.4.1",
     "js-base64": "^2.5.2",
     "lcu-connector": "^2.1.3",
+    "materialize-css": "^1.0.0-rc.2",
     "postman-request": "^2.88.1-postman.22",
     "update-electron-app": "^1.5.0"
   },
