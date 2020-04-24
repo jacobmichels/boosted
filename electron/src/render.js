@@ -5,6 +5,7 @@ const fs = require('fs');
 const https = require('https');
 const LCUConnector = require('lcu-connector');
 const request = require('postman-request');
+const jsonEdit = require("edit-json-file");
 
 //global interval variable for starting and stopping polling
 var interval;
@@ -12,8 +13,10 @@ var interval;
 //global variable for accessing LCU
 let connector;
 
-//global variable to store pushed_id
+//global variable to store data in config.json
 let id;
+let interval_time=50;
+let accept_timing='wait';
 
 //global variable to store info about current client session
 let LCU;
@@ -36,20 +39,20 @@ $(document).ready(function () {
 
 //read config file and set global id
 readConfig = () => {
-    fs.readFile(__dirname + '/../config.json', (err, data) => {
-        if (err) {
-            id = 0;
-            $('#message').html('Please set your pushed ID in the config menu');
-        }
-        else {
-            id = JSON.parse(data).pushed_id;
-        }
-        console.log(id);
-    })
+    let file = jsonEdit(__dirname+'/../config.json');
+    id=file.data.pushed_id;
+    interval_time=file.data.interval;
+    accept_timing=file.data.timing;
+    if(!id){
+        $('#message').html('Please set your pushed ID in the config menu');
+    }
+    else{
+        $('#message').html('After the game instance is found, feel free to minimize this window. You will be notified when your game is ready.');
+    }
 }
 
 //call back to "check if in queue" request
-readyCheck=(error, response, body) => {
+readyCheck = (error, response, body) => {
     let info;
     try {
         info = JSON.parse(body);
@@ -146,35 +149,47 @@ $("#hook-btn").click(function () {
             agent: agent,
         }
         console.log(options);
-        interval = setInterval(function () { request(options, readyCheck); }, 50);      //TODO make interval configurable
+        interval = setInterval(function () { request(options, readyCheck); }, interval_time);      //TODO make interval configurable
     });
     connector.start();
     $('#stop-btn').removeClass('disabled');
     $('#config-btn').addClass('disabled');
+    $('#hook-btn').addClass('disabled');
     document.getElementById('message').innerHTML = "Looking for game instance...";
     BrowserWindow.getFocusedWindow().setSize(500, 265);
 });
 
 $('#config-btn').click(function () {        //show configuration options
-    BrowserWindow.getFocusedWindow().setSize(500, 340);
-    $('#message').html('<div class="input-field"><input id="pushed-id-field" class="white-text" type="text"><label for="pushed-id-field">Pushed ID</label><a onclick="confirm()" class="waves-effect red waves-light btn">save</a></div>');
-})
-
-confirm = () => {       //save id to file
-    let pushed_id = $('#pushed-id-field').val();
-    let config = { 'pushed_id': pushed_id };
-    fs.writeFile(__dirname + '/../config.json', JSON.stringify(config), () => {
-        $('#message').html('Configuration saved');
+    // BrowserWindow.getFocusedWindow().setSize(500, 340);
+    // $('#message').html('<div class="input-field"><input id="pushed-id-field" class="white-text" type="text"><label for="pushed-id-field">Pushed ID</label><a onclick="confirm()" class="waves-effect red waves-light btn">save</a></div>');
+    let main = BrowserWindow.getFocusedWindow();
+    main.setEnabled(false);
+    main.on('focus',()=>{
         readConfig();
     })
-    console.log(config);
-    BrowserWindow.getFocusedWindow().setSize(500, 265);
-}
+    let win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true,
+        },
+        frame: false
+    })
+    win.setMenu(null);
+    win.on('closed', () => {
+        win = null;
+        main.setEnabled(true);
+        main.focus();
+    })
+    win.loadURL(`file://${__dirname}/config.html`);
+    
+    // win.webContents.openDevTools();
+})
 
 $('#stop-btn').click(function () {
     connector.stop();       //stop polling for queue
     clearInterval(interval);
-    document.getElementById('message').innerHTML = "Stopped looking for game instance. (requests)";
+    document.getElementById('message').innerHTML = "Stopped looking for game instance.";
     $('#hook-btn').removeClass('disabled');
     $('#stop-btn').addClass('disabled');
     $('#config-btn').removeClass('disabled');

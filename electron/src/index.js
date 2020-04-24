@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+require('update-electron-app')()
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -16,12 +17,19 @@ const createWindow = () => {
     webPreferences:{
       nodeIntegration:true,
     },
-    frame:false
+    frame:false,
+    resizable:false
   });
 
   mainWindow.setMenu(null);
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+
+  mainWindow.on('close',()=>{
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  })
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
