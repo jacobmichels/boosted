@@ -5,6 +5,7 @@ const fs = require('fs');
 const https = require('https');
 const LCUConnector = require('lcu-connector');
 const request = require('postman-request');
+const jsonEdit = require("edit-json-file");
 
 //global interval variable for starting and stopping polling
 var interval;
@@ -38,23 +39,16 @@ $(document).ready(function () {
 
 //read config file and set global id
 readConfig = () => {
-    fs.readFile(__dirname + '/../config.json', (err, data) => {
-        if (err) {
-            id = 0;
-            $('#message').html('Please set your pushed ID in the config menu');
-        }
-        else {
-            let config = JSON.parse(data);
-            id = config.pushed_id;
-            if(id===''){
-                id = 0;
-                $('#message').html('Please set your pushed ID in the config menu');
-            }
-            interval_time=config.interval;
-            accept_timing=config.timing;
-        }
-        console.log(id);
-    })
+    let file = jsonEdit(__dirname+'/../config.json');
+    id=file.data.pushed_id;
+    interval_time=file.data.interval;
+    accept_timing=file.data.timing;
+    if(!id){
+        $('#message').html('Please set your pushed ID in the config menu');
+    }
+    else{
+        $('#message').html('After the game instance is found, feel free to minimize this window. You will be notified when your game is ready.');
+    }
 }
 
 //call back to "check if in queue" request
@@ -170,6 +164,9 @@ $('#config-btn').click(function () {        //show configuration options
     // $('#message').html('<div class="input-field"><input id="pushed-id-field" class="white-text" type="text"><label for="pushed-id-field">Pushed ID</label><a onclick="confirm()" class="waves-effect red waves-light btn">save</a></div>');
     let main = BrowserWindow.getFocusedWindow();
     main.setEnabled(false);
+    main.on('focus',()=>{
+        readConfig();
+    })
     let win = new BrowserWindow({
         width: 800,
         height: 600,

@@ -25,10 +25,14 @@ readConfig = () => {
     interval_time=file.data.interval;
     accept_timing=file.data.timing;
 
-    $('#pushed-id-field').val(id);
-    $('#pushed-id-field-label').addClass('active');
-    $('#interval-field').val(interval_time);
-    $('#interval-field-label').addClass('active');
+    if(id){
+        $('#pushed-id-field').val(id);
+        $('#pushed-id-field-label').addClass('active');
+    }
+    if(interval_time){
+        $('#interval-field').val(interval_time);
+        $('#interval-field-label').addClass('active');
+    }
     if(accept_timing==='asap'){
         $('#default-option').html('Queue Accept timing (Set to accept ASAP)');
         $('#default-option').attr('value','asap');
@@ -47,15 +51,11 @@ save = () => {       //save id to file
     accept_timing = $('#queue-accept-timing')[0].value;
 
     let file = jsonEdit(__dirname+'/../config.json')
-    if(id){
-        file.set("pushed_id",id);
-    }
-    if(interval_time){
-        file.set("interval",interval_time);
-    }
-    if(accept_timing){
-        file.set("timing",accept_timing)
-    }
+    
+    file.set("pushed_id",id);
+    file.set("interval",interval_time);
+    file.set("timing",accept_timing)
+    
     file.save();
     
     let current = BrowserWindow.getFocusedWindow();
