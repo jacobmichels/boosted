@@ -1,7 +1,6 @@
 const Base64 = require('js-base64').Base64;
 const { BrowserWindow } = require('electron').remote;
 const customTitlebar = require('custom-electron-titlebar');
-const fs = require('fs');
 const https = require('https');
 const LCUConnector = require('lcu-connector');
 const request = require('postman-request');
@@ -33,7 +32,6 @@ new customTitlebar.Titlebar({
 
 $(document).ready(function () {
     $('#stop-btn').addClass('disabled');
-    $('#suspend-btn').addClass('disabled');
     readConfig();
 })
 
@@ -121,7 +119,6 @@ $("#hook-btn").click(function () {
         $('#hook-btn').removeClass('disabled');
         console.log("lost connection with LCU");
         $('#stop-btn').addClass('disabled');
-        $('#suspend-btn').addClass('disabled');
         $('#config-btn').addClass('disabled');
         document.getElementById('message').innerHTML = "Lost connection with game client.";
     });
@@ -194,3 +191,26 @@ $('#stop-btn').click(function () {
     $('#stop-btn').addClass('disabled');
     $('#config-btn').removeClass('disabled');
 });
+
+$('#help-btn').click(()=>{
+    let main = BrowserWindow.getFocusedWindow();
+    main.setEnabled(false);
+
+    let win = new BrowserWindow({
+        width: 700,
+        height: 825,
+        webPreferences: {
+            nodeIntegration: true,
+        },
+        frame: false
+    })
+    win.setMenu(null);
+    win.on('closed', () => {
+        win = null;
+        main.setEnabled(true);
+        main.focus();
+    })
+    win.loadURL(`file://${__dirname}/setup.html`);
+
+    // win.webContents.openDevTools();
+})
