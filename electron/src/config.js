@@ -64,9 +64,17 @@ save = () => {       //save id to file
     // BrowserWindow.getFocusedWindow().setSize(500, 265);
 }
 
-function adjust_textarea(h) {
-    h.style.height = "20px";
-    h.style.height = (h.scrollHeight)+"px";
+test = () =>{
+    let tempID = $('#pushed-id-field').val();
+    $.ajax({
+        type: 'POST',
+        data: { "id": tempID, "event": "test" },
+        url: 'https://us-central1-lol-boosted.cloudfunctions.net/sendNotification',
+        success: function (data) {
+            $('#message').html('Sent test notification to Pushed ID "'+tempID+'"');
+        },
+        error: function (data) {
+            $('#message').html("error in http request to firebase");
+        }
+    })
 }
-
-// $($)

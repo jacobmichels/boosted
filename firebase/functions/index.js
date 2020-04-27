@@ -15,12 +15,25 @@ exports.sendNotification = functions.https.onRequest((request, response) => {
     // console.log(request.query);
     // response.send("good");
 
-    const formdata = {
-        "app_key": process.env.app_key,
-        "app_secret": process.env.app_secret,
-        "target_type": "pushed_id",
-        "content": "Your league game is ready!",
-        "pushed_id":request.body.id,
+    let formdata;
+
+    if(request.body.event==='test'){
+        formdata = {
+            "app_key": process.env.app_key,
+            "app_secret": process.env.app_secret,
+            "target_type": "pushed_id",
+            "content": "This is a test notification from boosted. If you got this, everything should be working!",
+            "pushed_id":request.body.id,
+        }
+    }
+    else{
+        formdata = {
+            "app_key": process.env.app_key,
+            "app_secret": process.env.app_secret,
+            "target_type": "pushed_id",
+            "content": "Your league game is ready!",
+            "pushed_id":request.body.id,
+        }
     }
 
     https.post({
