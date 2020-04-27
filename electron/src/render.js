@@ -31,7 +31,6 @@ new customTitlebar.Titlebar({
 });
 
 $(document).ready(function () {
-    $('#stop-btn').addClass('disabled');
     readConfig();
 })
 
@@ -161,12 +160,10 @@ $('#config-btn').click(function () {        //show configuration options
     // $('#message').html('<div class="input-field"><input id="pushed-id-field" class="white-text" type="text"><label for="pushed-id-field">Pushed ID</label><a onclick="confirm()" class="waves-effect red waves-light btn">save</a></div>');
     let main = BrowserWindow.getFocusedWindow();
     main.setEnabled(false);
-    main.on('focus',()=>{
-        readConfig();
-    })
+
     let win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 650,
+        height: 460,
         webPreferences: {
             nodeIntegration: true,
         },
@@ -177,6 +174,7 @@ $('#config-btn').click(function () {        //show configuration options
         win = null;
         main.setEnabled(true);
         main.focus();
+        readConfig();
     })
     win.loadURL(`file://${__dirname}/config.html`);
     
@@ -198,7 +196,7 @@ $('#help-btn').click(()=>{
 
     let win = new BrowserWindow({
         width: 700,
-        height: 825,
+        height: 800,
         webPreferences: {
             nodeIntegration: true,
         },
