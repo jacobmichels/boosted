@@ -90,3 +90,6 @@ out/
 
 # App config
 config.json
+
+# Compile sass
+custom.css
