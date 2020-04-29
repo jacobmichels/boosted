@@ -163,7 +163,7 @@ $('#config-btn').click(function () {        //show configuration options
 
     let win = new BrowserWindow({
         width: 650,
-        height: 460,
+        height: 470,
         webPreferences: {
             nodeIntegration: true,
         },
