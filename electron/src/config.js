@@ -6,7 +6,7 @@ const jsonEdit = require("edit-json-file");
 
 
 new customTitlebar.Titlebar({
-    backgroundColor: customTitlebar.Color.fromHex('#333333'),
+    backgroundColor: customTitlebar.Color.fromHex('#121212'),
     menu: null,
     icon: "../resources/icons/lol-icon.png"
 });
@@ -18,6 +18,17 @@ let accept_timing;
 $(document).ready(function(){
     readConfig();
 });
+
+setAccept = (event) => {
+    console.log($(event).html());
+    let text = $(event).html();
+    if(text==='Wait for last second'){
+        accept_timing='wait';
+    }
+    else if(text==='Accept immediately'){
+        accept_timing='asap';
+    }
+}
 
 readConfig = () => {
     let file = jsonEdit(__dirname+'/../config.json');
@@ -36,7 +47,6 @@ readConfig = () => {
     if(accept_timing==='asap'){
         $('#default-option').html('Queue Accept timing (Set to accept ASAP)');
         $('#default-option').attr('value','asap');
-        M.AutoInit();
     }
 }
 
@@ -48,7 +58,9 @@ cancel = () =>{
 save = () => {       //save id to file
     id=$('#pushed-id-field').val();
     interval_time=$('#interval-field').val();
-    accept_timing = $('#queue-accept-timing')[0].value;
+    if(!accept_timing){
+        accept_timing='wait';
+    }
 
     let file = jsonEdit(__dirname+'/../config.json')
     
@@ -71,7 +83,7 @@ test = () =>{
         data: { "id": tempID, "event": "test" },
         url: 'https://us-central1-lol-boosted.cloudfunctions.net/sendNotification',
         success: function (data) {
-            $('#message').html('Sent test notification to Pushed ID "'+tempID+'"');
+            $('#message').html('Test notification sent');
         },
         error: function (data) {
             $('#message').html("error in http request to firebase");

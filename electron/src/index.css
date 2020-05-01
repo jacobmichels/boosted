@@ -1,80 +1,29 @@
-h4{
-  color: white;
+.card {
+  margin: 0 auto;
+  float: none;
+  margin-bottom: 10px;
+  background-color: #1e1e1e !important;
 }
 
-#title{
-  
-  font-family: 'Helvetica',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-weight: bold;
-  font-size: 32px;
+.container-after-titlebar{
+  /* background: linear-gradient(to bottom,#f4929d ,#cd5c6a); */
+  background-color: #121212;
 }
 
-#message{
-  font-family: "Helvetica",-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  margin-top: 20px;
+.btn{
+  color: black !important;
+  background-color: #a668e8 !important;
+  border-color: #a668e8 !important;
 }
 
-a{
-  font-family: "Helvetica",-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+p{
+  font-size: 15px;
 }
 
-a:-webkit-any-link {
-  color: -webkit-link;
-  cursor: pointer;
-  text-decoration: underline;
+#main-card{
+  width: 25rem;
 }
 
-html,body {
-  margin: 0;
-  height: 100%;
-}
-
-#background{
-  height: 100%;
-  background: linear-gradient(to bottom,#f4929d ,#cd5c6a);
-}
-
-#menubar{
-  height: 25px;
-  width: 100%;
-  background-color: #212121;
-}
-
-.bg-color{
-  background-color: #333333 !important;
-}
-
-#valign{
-  margin: 0;
-  height: 100%;
-}
-
-#all-container{
-  margin: 0;
-  height: 100%;
-}
-
-#valign{
-  vertical-align: middle;
-}
-.input-field input[type=text]:focus + label {
-  color: #cd5c6a !important;
-}
-.input-field input[type=text]:label {
-  color: white !important;
-}
-
-.input-field>label{
-  color: white;
-}
-
-/* label underline focus color */
-.input-field input[type=text]:focus {
-  border-bottom: 1px solid #cd5c6a !important;
-  box-shadow: 0 1px 0 0 #cd5c6a !important;
-}
-
-input{
-  color: #ffffff;
-  font-size:1rem !important;
+#config-card{
+  width: 27rem;
 }

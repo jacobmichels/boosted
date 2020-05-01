@@ -2,65 +2,122 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Boosted: Configuration</title>
-    <link rel="stylesheet" href="index.css">
-    <!-- Google fonts -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
-    <link rel="stylesheet" type="text/css" href="../node_modules/materialize-css/dist/css/materialize.css">
-    <!-- Compiled and minified JavaScript -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
-    <script defer src="config.js"></script>
-    <!-- Font Awesome -->
-    <script defer src="https://kit.fontawesome.com/1c9144b004.js" crossorigin="anonymous"></script>
-    <script defer>window.$ = window.jQuery = require('jquery');</script>
-    <link rel="stylesheet" type="text/css" href="../scss/custom.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Boosted: Configuration</title>
+  <link rel="stylesheet" href="index.css">
+  <!-- Google fonts -->
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+  <script defer>window.$ = window.jQuery = require('jquery');</script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <script defer src="config.js"></script>
+  <!-- Font Awesome -->
+  <script defer src="https://kit.fontawesome.com/1c9144b004.js" crossorigin="anonymous"></script>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 </head>
 
 <body>
-    <div id="all-container">
-        <div id="background">
-          <div id="valign" class="valign-wrapper">
-            <div class="container center-align">
-              <div class="center-align">
-                <div class="bg-color card z-depth-4" >
-                  <div class="card-content white-text">
-                    <span id="title" class="card-title">&#127959; Configuration</span>
-                    <p id="message"></p>
-                  </div>
-                  <div class="card-action">
-                    <div class="input-field">
-                      <input id="pushed-id-field" class="white-text" type="text">
-                      <label id="pushed-id-field-label" for="pushed-id-field">Pushed ID</label>
-                    </div>
-                    <div class="input-field">
-                      <input id="interval-field" class="white-text" type="text">
-                      <label id="interval-field-label" for="interval-field">Polling Interval (ms)</label>
-                    </div>
-                    <div class="input-field">
-                      <select id="queue-accept-timing">
-                        <option id='default-option' class="white-text" value="wait" disabled selected>Queue Accept timing (Set to wait)</option>
-                        <option value="asap">Accept as soon as possible</option>
-                        <option value="wait">Wait until last second to accept</option>
-                      </select>
-                    </div>
-                    <a onclick="test()" class="waves-effect red waves-light btn">test pushed id</a>
-                    <a onclick="cancel()" class="waves-effect red waves-light btn">cancel</a>
-                    <a onclick="save()" class="waves-effect red waves-light btn">save and exit</a>
-                  </div>
+  <div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-12">
+        <div id="config-card" class="card">
+          <div class="card-body">
+            <h3 class="card-title text-center text-white">Configuration</h3>
+            <p id="message" class="card-text text-center text-white"></p>
+            <hr>
+            <div class="text-center">
+              <form class="text-white">
+                <div class="form-group">
+                  <label for="pushed-id-field">Pushed ID</label>
+                  <input type="text" class="form-control" id="pushed-id-field" aria-describedby="emailHelp">
+                  <small id="emailHelp" class="form-text"></small>
                 </div>
+                <div class="form-group">
+                  <label for="interval-field">Polling Interval</label>
+                  <input type="number" class="form-control" id="interval-field">
+                </div>
+              </form>
+              <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-flip="false" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Queue Accept Timing
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a onclick="setAccept(this)" class="dropdown-item">Wait for last second</a>
+                  <a onclick="setAccept(this)" class="dropdown-item">Accept immediately</a>
+                </div>
+              </div>
+              <hr>
+              <button onclick="test();" class="btn btn-sm btn-dark">Test Pushed ID</button>
+              <button onclick="save();" class="btn btn-sm btn-dark">Save</button>
+              <button onclick="cancel();" class="btn btn-sm btn-dark">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- <div id="all-container">
+    <div id="background">
+      <div id="valign" class="valign-wrapper">
+        <div class="container center-align">
+          <div class="center-align">
+            <div class="bg-color card z-depth-4">
+              <div class="card-content white-text">
+                <span id="title" class="card-title">&#127959; Configuration</span>
+                <p id="message"></p>
+              </div>
+              <div class="card-action">
+                <div class="input-field">
+                  <input id="pushed-id-field" class="white-text" type="text">
+                  <label id="pushed-id-field-label" for="pushed-id-field">Pushed ID</label>
+                </div>
+                <div class="input-field">
+                  <input id="interval-field" class="white-text" type="text">
+                  <label id="interval-field-label" for="interval-field">Polling Interval (ms)</label>
+                </div>
+                <div class="input-field">
+                  <select id="queue-accept-timing">
+                    <option id='default-option' class="white-text" value="wait" disabled selected>Queue Accept timing
+                      (Set to wait)</option>
+                    <option value="asap">Accept as soon as possible</option>
+                    <option value="wait">Wait until last second to accept</option>
+                  </select>
+                </div>
+                <a onclick="test()" class="waves-effect red waves-light btn">test pushed id</a>
+                <a onclick="cancel()" class="waves-effect red waves-light btn">cancel</a>
+                <a onclick="save()" class="waves-effect red waves-light btn">save and exit</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <script type="text/javascript" src="../node_modules/materialize-css/dist/js/materialize.js"></script>
-      <script>M.AutoInit();</script>
-      
+    </div>
+  </div>
+  <script type="text/javascript" src="../node_modules/materialize-css/dist/js/materialize.js"></script>
+  <script>M.AutoInit();</script> -->
+
 </body>
 
 </html>

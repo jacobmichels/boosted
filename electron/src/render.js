@@ -25,13 +25,16 @@ let prompt_timer = 15;
 
 //create titlebar
 new customTitlebar.Titlebar({
-    backgroundColor: customTitlebar.Color.fromHex('#333333'),
+    backgroundColor: customTitlebar.Color.fromHex('#121212'),
     menu: null,
     icon: "../resources/icons/lol-icon.png"
 });
 
-$(document).ready(function () {
+$(document).ready(async function () {
     readConfig();
+    $('#hook-btn').prop('disabled',false);
+    $('#help-btn').prop('disabled',false);
+    $('#config-btn').prop('disabled',false);
 })
 
 //read config file and set global id
@@ -115,11 +118,11 @@ $("#hook-btn").click(function () {
     //instantiate connector object and set event listeners
     connector = new LCUConnector();
     connector.on('disconnect', (data) => {
-        $('#hook-btn').removeClass('disabled');
+        $('#hook-btn').prop('disabled',false);
         console.log("lost connection with LCU");
-        $('#stop-btn').addClass('disabled');
-        $('#config-btn').addClass('disabled');
-        document.getElementById('message').innerHTML = "Lost connection with game client.";
+        $('#stop-btn').attr('disabled',true);
+        $('#config-btn').attr('disabled',true);
+        document.getElementById('message').innerHTML = "Lost connection with client.";
     });
     connector.on('connect', (data) => {
         //on connection to the game client, start polling for queue
@@ -148,11 +151,11 @@ $("#hook-btn").click(function () {
         interval = setInterval(function () { request(options, readyCheck); }, interval_time);      //TODO make interval configurable
     });
     connector.start();
-    $('#stop-btn').removeClass('disabled');
-    $('#config-btn').addClass('disabled');
-    $('#hook-btn').addClass('disabled');
+    $('#stop-btn').prop('disabled',false);
+    $('#config-btn').prop('disabled',true);
+    $('#hook-btn').prop('disabled',true);
     document.getElementById('message').innerHTML = "Looking for game instance...";
-    BrowserWindow.getFocusedWindow().setSize(500, 265);
+    // BrowserWindow.getFocusedWindow().setSize(500, 265);
 });
 
 $('#config-btn').click(function () {        //show configuration options
@@ -162,7 +165,7 @@ $('#config-btn').click(function () {        //show configuration options
     main.setEnabled(false);
 
     let win = new BrowserWindow({
-        width: 650,
+        width: 460,
         height: 470,
         webPreferences: {
             nodeIntegration: true,
@@ -185,9 +188,9 @@ $('#stop-btn').click(function () {
     connector.stop();       //stop polling for queue
     clearInterval(interval);
     document.getElementById('message').innerHTML = "Stopped looking for game instance.";
-    $('#hook-btn').removeClass('disabled');
-    $('#stop-btn').addClass('disabled');
-    $('#config-btn').removeClass('disabled');
+    $('#hook-btn').prop('disabled',false);
+    $('#stop-btn').prop('disabled',true);
+    $('#config-btn').prop('disabled',false);
 });
 
 $('#help-btn').click(()=>{
@@ -195,8 +198,8 @@ $('#help-btn').click(()=>{
     main.setEnabled(false);
 
     let win = new BrowserWindow({
-        width: 700,
-        height: 800,
+        width: 470,
+        height: 770,
         webPreferences: {
             nodeIntegration: true,
         },

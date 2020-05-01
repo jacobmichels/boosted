@@ -1,7 +1,7 @@
 {
   "name": "boosted-app",
   "productName": "boosted-app",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "League Queue notifications",
   "main": "src/index.js",
   "scripts": {
@@ -61,6 +61,7 @@
     }
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
     "custom-electron-titlebar": "^3.2.2-hotfix62",
     "edit-json-file": "^1.4.0",
     "electron-squirrel-startup": "^1.0.0",

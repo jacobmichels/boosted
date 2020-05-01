@@ -3,7 +3,7 @@ const { BrowserWindow } = require('electron').remote;
 const shell = require('electron').shell;
 
 new customTitlebar.Titlebar({
-    backgroundColor: customTitlebar.Color.fromHex('#333333'),
+    backgroundColor: customTitlebar.Color.fromHex('#121212'),
     menu: null,
     icon: "../resources/icons/lol-icon.png"
 });

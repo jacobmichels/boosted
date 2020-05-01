@@ -1,44 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Boosted: League Notifications</title>
-    <link rel="stylesheet" href="index.css">
-    <!-- Google fonts -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script defer src="render.js"></script>
-    <!-- Font Awesome -->
-    <script defer src="https://kit.fontawesome.com/1c9144b004.js" crossorigin="anonymous"></script>
-    <script defer>window.$ = window.jQuery = require('jquery');</script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  </head>
-  <body>
-    <div id="all-container">
-      <div id="background">
-        <div id="valign" class="valign-wrapper">
-          <div class="container center-align">
-            <div class="center-align">
-              <div class="bg-color card z-depth-4" >
-                <div class="card-content white-text">
-                  <span id="title" class="card-title">&#128293; Queue Listener</span>
-                  <p id="message">After the game instance is found, feel free to minimize this window. You will be notified when your game is ready.</p>
-                </div>
-                <div class="card-action">
-                  <a id="hook-btn" class="waves-effect waves-light red btn">Start</a>
-                  <a id="stop-btn" class="waves-effect waves-light red disabled btn">Stop</a>
-                  <a id="config-btn" class="waves-effect waves-light red  btn">Configure</a>
-                  <a id="help-btn" class="waves-effect waves-light red btn">Help</a>
-                </div>
-              </div>
+<head>
+  <meta charset="UTF-8">
+  <title>Boosted: League Notifications</title>
+  <link rel="stylesheet" href="index.css">
+  <!-- Google fonts -->
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+  <script>window.$ = window.jQuery = require('jquery');</script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <script defer src="render.js"></script>
+  <!-- Font Awesome -->
+  <script defer src="https://kit.fontawesome.com/1c9144b004.js" crossorigin="anonymous"></script>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+  <div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-12">
+        <div id="main-card" class="card">
+          <div class="card-body">
+            <h3 class="card-title text-center text-white">Queue Listener</h3>
+            <p id="message" class="card-text text-center text-white">
+              After the game instance is found, feel free to minimize this window. You will be notified when your game is ready.
+            </p>
+            <hr>
+            <div class="text-center">
+              <button id="hook-btn" class="btn btn-sm btn-dark" disabled>Start</button>
+              <button id="stop-btn" class="btn btn-sm btn-dark" disabled>Stop</button>
+              <button id="config-btn" class="btn btn-sm btn-dark" disabled>Configure</button>
+              <button id="help-btn" class="btn btn-sm btn-dark" disabled>Help</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

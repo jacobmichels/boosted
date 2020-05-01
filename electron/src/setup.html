@@ -5,20 +5,79 @@
     <title>Boosted: Help</title>
     <link rel="stylesheet" href="index.css">
     <!-- Google fonts -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  
+    <script defer>window.$ = window.jQuery = require('jquery');</script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+  
     <script defer src="setup.js"></script>
     <!-- Font Awesome -->
     <script defer src="https://kit.fontawesome.com/1c9144b004.js" crossorigin="anonymous"></script>
-    <script defer>window.$ = window.jQuery = require('jquery');</script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   </head>
   <body>
-    <div id="all-container">
+    <div class="container h-100">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-12">
+          <div id="config-card" class="card">
+            <div class="card-body">
+              <h3 class="card-title text-center text-white">Setup Help</h3>
+              <p id="message" class="card-text text-center text-white"></p>
+              <hr>
+              <div class="text-center text-white">
+                <h4>Step 1:</h4>
+                  <p>Create an account on <a href="https://pushed.co/">pushed.co</a></p>
+                  <hr>
+                  <h4>Step 2:</h4>
+                  <p>Download "Get Pushed" on the App Store or "Pushed" on Google Play</p>
+                  <hr>
+                  <h4>Step 3:</h4>
+                  <p>Subscribe to the boosted channel on pushed.co by clicking <a href="https://pushed.co/s/mQqSeRa">HERE</a></p>
+                  <hr>
+                  <h4>Step 4:</h4>
+                  <p>Get your Pushed ID from the account page on the pushed.co website. Then paste the ID into the configure section of this app.</p>
+                  <hr>
+                  <h4>Step 5:</h4>
+                  <p>Click "Start" on the main menu. If you did everything right, your ready checks should get automatically accepted and a notification will be delivered to your phone.</p>
+                  
+                  <a id="close-btn" class="waves-effect waves-light red btn">Close</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <div id="all-container">
       <div id="background">
         <div id="valign" class="valign-wrapper">
           <div class="container center-align">
@@ -50,6 +109,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </body>
 </html>
