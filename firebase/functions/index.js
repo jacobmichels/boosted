@@ -26,6 +26,9 @@ exports.sendNotification = functions.https.onRequest((request, response) => {
             "pushed_id":request.body.id,
         }
     }
+    else if(request.body.event==='poke'){
+        return;
+    }
     else{
         formdata = {
             "app_key": process.env.app_key,
@@ -41,15 +44,15 @@ exports.sendNotification = functions.https.onRequest((request, response) => {
         formData:formdata
     },(err,httpsRes,body)=>{
         if(err){
-            console.error("error:");
+            // console.error("error:");
             console.error(err);
             return;
         }
         else{
-            console.log("notification sent");
+            // console.log("notification sent");
             return;
         }
     })
-
-    return response.send(request.body);
+    response.send(request.body);
+    return;
 });
