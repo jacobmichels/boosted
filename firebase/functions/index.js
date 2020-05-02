@@ -9,6 +9,26 @@ const https = require('postman-request');
 //  response.send("Hello from Firebase!");
 // });
 
+exports.scheduledFunction = functions.pubsub.schedule('every 1 minutes').onRun((context) => {
+    https.post({
+        url:'https://us-central1-lol-boosted.cloudfunctions.net/sendNotification',
+        json:{
+            'event':'poke'
+        }
+    },(err,httpsRes,body)=>{
+        if(err){
+            // console.error("error:");
+            console.error(err);
+            return;
+        }
+        else{
+            // console.log("notification sent");
+            return;
+        }
+    })
+    return null;
+  });
+
 exports.sendNotification = functions.https.onRequest((request, response) => {
     // console.log("requests:");
     // console.log(request.body);
@@ -27,9 +47,10 @@ exports.sendNotification = functions.https.onRequest((request, response) => {
         }
     }
     else if(request.body.event==='poke'){
+        response.send('awake');
         return;
     }
-    else{
+    else if(request.body.event==='match found'){
         formdata = {
             "app_key": process.env.app_key,
             "app_secret": process.env.app_secret,
@@ -37,6 +58,10 @@ exports.sendNotification = functions.https.onRequest((request, response) => {
             "content": "Your league game is ready!",
             "pushed_id":request.body.id,
         }
+    }
+    else{
+        response.status('400').send('bad format');
+        return;
     }
 
     https.post({
@@ -53,6 +78,6 @@ exports.sendNotification = functions.https.onRequest((request, response) => {
             return;
         }
     })
-    response.send(request.body);
+    response.send();
     return;
 });
