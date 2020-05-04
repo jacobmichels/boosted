@@ -1,13 +1,28 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, autoUpdater, dialog} = require('electron');
 const path = require('path');
 require('update-electron-app')({
-  repo:'jacobmichels/boosted'
+  repo:'jacobmichels/boosted',
+  notifyUser:false
 })
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
+
+autoUpdater.on('update-downloaded',(event, releaseNotes, releaseName, releaseDate, updateURL)=>{
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Restart','Later'],
+    title: 'Application Update',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'A new version has been downloaded. Exit the application to apply the updates.'
+  }
+  let index = dialog.showMessageBoxSync(dialogOpts);
+  if(index===0){
+    autoUpdater.quitAndInstall();
+  }
+})
 
 
 
@@ -46,7 +61,9 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready',()=>{
+  createWindow();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
