@@ -21,7 +21,7 @@ let accept_timing='wait';
 let LCU;
 
 //global variable to store current timer on ready check. initialized to value larger than max timer
-let prompt_timer = 15;
+let last_time = 15;
 
 //create titlebar
 new customTitlebar.Titlebar({
@@ -47,58 +47,90 @@ readConfig = () => {
         $('#message').html('Please set your pushed ID in the config menu');
     }
     else{
-        $('#message').html('After the game instance is found, feel free to minimize this window. You will be notified when your game is ready.');
+        $('#message').html('After the client instance is found, feel free to minimize this window. You will be notified when your game is ready.');
     }
 }
 
 //call back to "check if in queue" request
 readyCheck = (error, response, body) => {
     let info;
+    let current_time;
     try {
         info = JSON.parse(body);
     }
     catch (e) {
         console.warn(e);
     }
-    console.log(prompt_timer);
-    if (info.state === "InProgress") {      //id this is true, the ready check is available
-        if (info.timer > prompt_timer) {
-            prompt_timer = info.timer;
-            if (prompt_timer === 10) {
-                //send request to accept the queue
-                var agentOptions;
-                var agent;
-                let pw = Base64.encode("riot:" + LCU.password);
-                agentOptions = {
-                    rejectUnauthorized: false   //needs to do this since LCU api is http
-                };
-                agent = new https.Agent(agentOptions);
-                const acceptOptions = {
-                    url: 'https://127.0.0.1:' + LCU.port + '/lol-matchmaking/v1/ready-check/accept',
-                    headers: {
-                        'User-Agent': 'postman-request',
-                        'Accept': 'application/json',
-                        'Authorization': 'Basic ' + pw,
-                    },
-                    agent: agent,
-                };
-                request.post(acceptOptions, acceptCallback);        //accept ready check 
-                clearInterval(interval);    //stop polling for queue prompt
-
+    console.log(last_time);
+    if (info.state === "InProgress") {      //id this is true, the ready check is showing
+        current_time = info.timer;
+        if (current_time > last_time) {
+            last_time = current_time;
+            if(accept_timing==='asap'){
+                if (current_time === 0) {      //accept game as soon as it's available
+                    //send request to accept the queue
+                    var agentOptions;
+                    var agent;
+                    let pw = Base64.encode("riot:" + LCU.password);
+                    agentOptions = {
+                        rejectUnauthorized: false   //needs to do this since LCU api is http
+                    };
+                    agent = new https.Agent(agentOptions);
+                    const acceptOptions = {
+                        url: 'https://127.0.0.1:' + LCU.port + '/lol-matchmaking/v1/ready-check/accept',
+                        headers: {
+                            'User-Agent': 'postman-request',
+                            'Accept': 'application/json',
+                            'Authorization': 'Basic ' + pw,
+                        },
+                        agent: agent,
+                    };
+                    request.post(acceptOptions, acceptCallback);        //accept ready check
+                }
             }
+            else{
+                if (current_time === 10) {      //10 seconds into ready check
+                    //send request to accept the queue
+                    var agentOptions;
+                    var agent;
+                    let pw = Base64.encode("riot:" + LCU.password);
+                    agentOptions = {
+                        rejectUnauthorized: false   //needs to do this since LCU api is http
+                    };
+                    agent = new https.Agent(agentOptions);
+                    const acceptOptions = {
+                        url: 'https://127.0.0.1:' + LCU.port + '/lol-matchmaking/v1/ready-check/accept',
+                        headers: {
+                            'User-Agent': 'postman-request',
+                            'Accept': 'application/json',
+                            'Authorization': 'Basic ' + pw,
+                        },
+                        agent: agent,
+                    };
+                    request.post(acceptOptions, acceptCallback);        //accept ready check
+                }
+            }
+            
         }
-        else if (info.timer < prompt_timer) {
+        else if (current_time < last_time) {
             //new queue prompt, so send notification to phone via firebase
-            prompt_timer = info.timer;
-            document.getElementById('message').innerHTML = "Match found! Notification sent.";
+            alert('new match');
+            last_time = current_time;
+            document.getElementById('message').innerHTML = "Match found!";
             $.ajax({
                 type: 'POST',
                 data: { "id": id, "event": "match found" },
                 url: 'https://us-central1-lol-boosted.cloudfunctions.net/sendNotification',
                 success: function (data) {
+                    let html = document.getElementById('message').innerHTML;
+                    html+=' Notification Sent!';
+                    document.getElementById('message').innerHTML=html;
                 },
                 error: function (data) {
                     console.log("error in http request to firebase");
+                    let html = document.getElementById('message').innerHTML;
+                    html+=' Notification failed to send...';
+                    document.getElementById('message').innerHTML=html;
                 }
             })
         }
@@ -122,13 +154,14 @@ $("#hook-btn").click(function () {
         console.log("lost connection with LCU");
         $('#stop-btn').attr('disabled',true);
         $('#config-btn').attr('disabled',true);
+        clearInterval(interval);
         document.getElementById('message').innerHTML = "Lost connection with client.";
     });
     connector.on('connect', (data) => {
         //on connection to the game client, start polling for queue
         console.log(data);
         LCU = data;
-        document.getElementById('message').innerHTML = "Successfully attached to game instance. Will now begin to poll for queue prompt.";
+        document.getElementById('message').innerHTML = "Successfully attached to client instance. Will now begin to poll for queue prompt.";
         let pw = Base64.encode("riot:" + data.password);
         var agentOptions;
         var agent;
@@ -148,36 +181,37 @@ $("#hook-btn").click(function () {
             agent: agent,
         }
         console.log(options);
-        interval = setInterval(function () { request(options, readyCheck); }, interval_time);      //TODO make interval configurable
+        interval = setInterval(function () { request(options, readyCheck); }, interval_time);
     });
     connector.start();
     $('#stop-btn').prop('disabled',false);
     $('#config-btn').prop('disabled',true);
     $('#hook-btn').prop('disabled',true);
     document.getElementById('message').innerHTML = "Looking for game instance...";
-    // BrowserWindow.getFocusedWindow().setSize(500, 265);
 });
 
 $('#config-btn').click(function () {        //show configuration options
-    // BrowserWindow.getFocusedWindow().setSize(500, 340);
-    // $('#message').html('<div class="input-field"><input id="pushed-id-field" class="white-text" type="text"><label for="pushed-id-field">Pushed ID</label><a onclick="confirm()" class="waves-effect red waves-light btn">save</a></div>');
     let main = BrowserWindow.getFocusedWindow();
     main.setEnabled(false);
 
     let win = new BrowserWindow({
         width: 460,
         height: 470,
+        backgroundColor:'#121212',
         webPreferences: {
             nodeIntegration: true,
         },
         frame: false
     })
     win.setMenu(null);
+    win.on('ready-to-show',()=>{
+        win.show();
+    })
     win.on('closed', () => {
-        win = null;
+        win = null;     //cannot use main window when config window is open
         main.setEnabled(true);
         main.focus();
-        readConfig();
+        readConfig();   //update global variables when window is closed
     })
     win.loadURL(`file://${__dirname}/config.html`);
     
@@ -200,12 +234,16 @@ $('#help-btn').click(()=>{
     let win = new BrowserWindow({
         width: 470,
         height: 770,
+        backgroundColor:'#121212',
         webPreferences: {
             nodeIntegration: true,
         },
         frame: false
     })
     win.setMenu(null);
+    win.on('ready-to-show',()=>{
+        win.show();
+    })
     win.on('closed', () => {
         win = null;
         main.setEnabled(true);

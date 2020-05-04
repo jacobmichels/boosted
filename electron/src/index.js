@@ -16,12 +16,18 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 430,
     height: 280,
+    backgroundColor:'#121212',
     webPreferences:{
       nodeIntegration:true,
     },
+    show:false,
     frame:false,
     resizable:false
   });
+
+  mainWindow.on('ready-to-show',()=>{
+    mainWindow.show();
+  })
 
   mainWindow.setMenu(null);
   // and load the index.html of the app.
