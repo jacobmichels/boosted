@@ -67,7 +67,7 @@ readyCheck = (error, response, body) => {
         if (current_time > last_time) {
             last_time = current_time;
             if(accept_timing==='asap'){
-                if (current_time === 0) {      //accept game as soon as it's available
+                if (current_time === 1) {      //accept game as soon as it's available
                     //send request to accept the queue
                     var agentOptions;
                     var agent;
