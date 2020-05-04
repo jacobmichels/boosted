@@ -20,13 +20,17 @@ $(document).ready(function(){
 });
 
 setAccept = (event) => {
-    console.log($(event).html());
+    // console.log($(event).html());
     let text = $(event).html();
     if(text==='Wait for last second'){
         accept_timing='wait';
+        $('#wait-item').addClass('active');
+        $('#asap-item').removeClass('active');
     }
     else if(text==='Accept immediately'){
         accept_timing='asap';
+        $('#wait-item').removeClass('active');
+        $('#asap-item').addClass('active');
     }
 }
 
@@ -38,15 +42,15 @@ readConfig = () => {
 
     if(id){
         $('#pushed-id-field').val(id);
-        $('#pushed-id-field-label').addClass('active');
     }
     if(interval_time){
         $('#interval-field').val(interval_time);
-        $('#interval-field-label').addClass('active');
     }
     if(accept_timing==='asap'){
-        $('#default-option').html('Queue Accept timing (Set to accept ASAP)');
-        $('#default-option').attr('value','asap');
+        $('#asap-item').addClass('active');
+    }
+    else if(accept_timing==='wait'){
+        $('$wait-item').addClass('active');
     }
 }
 
