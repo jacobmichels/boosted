@@ -114,7 +114,7 @@ readyCheck = (error, response, body) => {
         }
         else if (current_time < last_time) {
             //new queue prompt, so send notification to phone via firebase
-            alert('new match');
+            // alert('new match');
             last_time = current_time;
             document.getElementById('message').innerHTML = "Match found!";
             $.ajax({
