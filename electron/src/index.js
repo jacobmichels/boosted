@@ -16,7 +16,7 @@ autoUpdater.on('update-downloaded',(event, releaseNotes, releaseName, releaseDat
     buttons: ['Restart','Later'],
     title: 'Application Update',
     message: process.platform === 'win32' ? releaseNotes : releaseName,
-    detail: 'A new version has been downloaded. Exit the application to apply the updates.'
+    detail: 'A new version has been downloaded. Click restart to apply the update.'
   }
   let index = dialog.showMessageBoxSync(dialogOpts);
   if(index===0){
