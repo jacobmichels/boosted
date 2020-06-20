@@ -9,26 +9,6 @@ const https = require('postman-request');
 //  response.send("Hello from Firebase!");
 // });
 
-exports.scheduledFunction = functions.pubsub.schedule('every 1 minutes').onRun((context) => {
-    https.post({
-        url:'https://us-central1-lol-boosted.cloudfunctions.net/sendNotification',
-        json:{
-            'event':'poke'
-        }
-    },(err,httpsRes,body)=>{
-        if(err){
-            // console.error("error:");
-            console.error(err);
-            return;
-        }
-        else{
-            // console.log("notification sent");
-            return;
-        }
-    })
-    return null;
-  });
-
 exports.sendNotification = functions.https.onRequest((request, response) => {
     // console.log("requests:");
     // console.log(request.body);
