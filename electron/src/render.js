@@ -198,7 +198,7 @@ $('#config-btn').click(function () {        //show configuration options
 
     let win = new BrowserWindow({
         width: 460,
-        height: 470,
+        height: 450,
         backgroundColor:'#121212',
         webPreferences: {
             nodeIntegration: true,
@@ -236,7 +236,7 @@ $('#help-btn').click(()=>{
 
     let win = new BrowserWindow({
         width: 470,
-        height: 770,
+        height: 780,
         backgroundColor:'#121212',
         webPreferences: {
             nodeIntegration: true,
