@@ -1,7 +1,7 @@
 {
   "name": "boosted-app",
   "productName": "boosted-app",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "League Queue notifications",
   "main": "src/index.js",
   "scripts": {
