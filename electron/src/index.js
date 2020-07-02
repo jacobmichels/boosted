@@ -1,4 +1,4 @@
-const { app, BrowserWindow, autoUpdater, dialog} = require('electron');
+const { app, BrowserWindow, autoUpdater, dialog, Tray, Menu} = require('electron');
 const path = require('path');
 require('update-electron-app')({
   repo:'jacobmichels/boosted',
@@ -39,6 +39,19 @@ const createWindow = () => {
     frame:false,
     resizable:false
   });
+
+  mainWindow.on('minimize',event=>{
+    event.preventDefault();
+    mainWindow.hide();
+  });
+
+  let appTray = new Tray(path.join(__dirname,'..\\resources\\icons\\lol-icon.png'));
+  let menu = Menu.buildFromTemplate([{label:'Show App',click:()=>{mainWindow.show();}},{label:'Quit',click:()=>{app.quit();}}]);
+  appTray.setContextMenu(menu);
+  appTray.on('double-click',()=>{
+    mainWindow.show();
+  })
+  
 
   mainWindow.on('ready-to-show',()=>{
     mainWindow.show();
