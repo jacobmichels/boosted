@@ -45,9 +45,11 @@ readConfig = () => {
     accept_timing=file.data.timing;
     if(!id){
         $('#message').html('Please set your pushed ID in the config menu');
+        $('#hook-btn').prop('disabled',true);
     }
     else{
         $('#message').html('After the client instance is found, feel free to minimize this window. You will be notified when your game is ready.');
+        $('#hook-btn').prop('disabled',false);
     }
 }
 
@@ -209,9 +211,10 @@ $('#config-btn').click(function () {        //show configuration options
     })
     win.on('closed', () => {
         win = null;     //cannot use main window when config window is open
-        main.setEnabled(true);
-        main.focus();
         readConfig();   //update global variables when window is closed
+        main.setEnabled(true);  //refocus main window
+        main.focus();
+        
     })
     win.loadURL(`file://${__dirname}/config.html`);
     
